@@ -1,0 +1,192 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "En esta página encontraras la documentación correspondiente microservicio trainModelService.",
+    "version": "1.0.0",
+    "title": "Banking Fraud",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "aaf00022@red.ujaen.es"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5193",
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Utiliza el token Bearer para la autenticación"
+    }
+  },
+  "tags": [
+    {
+      "name": "Train Model",
+      "description": "Todo acerca del entrenamiento del modelo",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/bankingFraud/trainModel": {
+      "post": {
+        "tags": [
+          "Train Model"
+        ],
+        "summary": "Entrena un modelo a un usuario.",
+        "description": "Con este microservicio, podemos un modelo a traves de un fichero de datos.",
+        "operationId": "trainmodel",
+        "consumes": [
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "csv_model",
+            "in": "formData",
+            "type": "file",
+            "description": "Modelo de entrenamiento en CSV",
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "type": "string",
+            "description": "Email del usuario.",
+            "required": true
+          },
+          {
+            "name": "model_name",
+            "in": "formData",
+            "type": "string",
+            "description": "Nombre resultante del modelo.",
+            "required": true
+          },
+          {
+            "name": "algorithm",
+            "in": "formData",
+            "type": "string",
+            "description": "Algoritmo utilizado para el entrenamiento.",
+            "required": true
+          },
+          {
+            "name": "input_type",
+            "in": "formData",
+            "type": "string",
+            "description": "Filtro de entrada para el modelo.",
+            "required": true
+          },
+          {
+            "name": "objetive",
+            "in": "formData",
+            "type": "string",
+            "description": "Filtro de salida para el modelo.",
+            "required": true
+          },
+          {
+            "name": "drop_column",
+            "in": "formData",
+            "type": "string",
+            "description": "Columnas de CSV a eliminar antes de entrenar el modelo.",
+            "required": true
+          },
+          {
+            "name": "filtered_coulumns",
+            "in": "formData",
+            "type": "string",
+            "description": "Nombre de la columna para input_type.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "401": {
+            "description": "Error de autorización",
+            "schema": {
+              "$ref": "#/definitions/Error_auth"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Satisfactorio": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Ratio de acierto: 0.9995058577746085"
+        }
+      }
+    },
+    "Error_validacion": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Error al parsear el archivo CSV."
+        }
+      }
+    },
+    "Error_servidor": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Servicio no disponible, intentelo de nuevo más tarde."
+        }
+      }
+    },
+    "Error_auth": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Token de cognito no proporcionado."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

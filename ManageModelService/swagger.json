@@ -1,0 +1,206 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "En esta página encontraras la documentación correspondiente microservicio manage_model_service.",
+    "version": "1.0.0",
+    "title": "Banking Fraud",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "aaf00022@red.ujaen.es"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5195",
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Utiliza el token Bearer para la autenticación."
+    }
+  },
+  "tags": [
+    {
+      "name": "Manage Model",
+      "description": "Todo acerca del control sobre los modelos entrenados.",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/bankingFraud/listModel": {
+      "get": {
+        "tags": [
+          "Manage Model"
+        ],
+        "summary": "Lista los modelos de un usuario.",
+        "description": "Con este microservicio, podemos obtener una lista con los modelos del usuario.",
+        "operationId": "Manage Model.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "401": {
+            "description": "Error de autorización",
+            "schema": {
+              "$ref": "#/definitions/Error_auth"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    },
+    "/bankingFraud/deleteModel": {
+      "post": {
+        "tags": [
+          "Manage Model"
+        ],
+        "summary": "Elimina un modelo entrenado del usuario.",
+        "description": "Con este microservicio, podemos eliminar un modelo especifico del usuario.",
+        "operationId": "Delete Model.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Campos necesarios para el registro del usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "401": {
+            "description": "Error de autorización",
+            "schema": {
+              "$ref": "#/definitions/Error_auth"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Satisfactorio": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteModel": {
+      "type": "object",
+      "properties": {
+        "model_name": {
+          "type": "string",
+          "example": "modelo_prueba"
+        },
+        "algorithm": {
+          "type": "string",
+          "example": "LogisticRegression"
+        }
+      }
+    },
+    "Error_validacion": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "No se ha encontrado ningun modelo para el usuario USER"
+        }
+      }
+    },
+    "Error_servidor": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Servicio no disponible, intentelo de nuevo más tarde."
+        }
+      }
+    },
+    "Error_auth": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Token de cognito no proporcionado."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

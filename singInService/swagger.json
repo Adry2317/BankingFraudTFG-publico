@@ -1,0 +1,152 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "En esta página encontraras la documentación correspondiente al microservicio sing In.",
+    "version": "1.0.0",
+    "title": "Banking Fraud",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "aaf00022@red.ujaen.es"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5191",
+  "tags": [
+    {
+      "name": "Sing In",
+      "description": "Todo acerca del inicio de sesión",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/bankingFraud/singIn": {
+      "post": {
+        "tags": [
+          "Sing In"
+        ],
+        "summary": "Registra a un nuevo usuario",
+        "description": "Con este microservicio, podemos iniciar sesión en el servicio.",
+        "operationId": "singiin",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Campos necesarios el inicio de sesión.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/singIn"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "singIn": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "prueba@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "format": "base64"
+        }
+      },
+      "xml": {
+        "name": "sing In"
+      }
+    },
+    "Satisfactorio": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "access_token": {
+              "type": "string",
+              "example": "eyJraWQiOiJyK3BSc1RtSTBsUjhEclZBd1VCRFJHa2RGbysrMEIyUlFVVDRIRDVDRlhzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI4OGRmMThkNy1jZGQxLTQzOTItYmMxNi05OGExMzQ1ZGYxNDkiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtbm9ydGgtMS5hbWF6b25hd3MuY29tXC9ldS1ub3J0aC0xX3hRTXdFTFJBSiIsImNsaWVudF9pZCI6IjRhY3BzcW9oZ2tkcHZqZGdyYWkxOTJ1MHE4Iiwib3JpZ2luX2p0aSI6IjFmZDk2Y2VjLWY0YmItNDYwMi1hNWQzLTU3Y2NmYTAwMmE3OSIsImV2ZW50X2lkIjoiNzkwOGFjYzUtMWVjZC00NGQ1LWFjNzYtMWE5ZjE3ZjY2YTBhIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTcwODI4NTA1NSwiZXhwIjoxNzA4Mjg4NjU1LCJpYXQiOjE3MDgyODUwNTUsImp0aSI6IjZlOGRkYjYxLTM4ZjgtNDBmNi05ZGM0LTZhZGJjNWFmZTNhZSIsInVzZXJuYW1lIjoiODhkZjE4ZDctY2RkMS00MzkyLWJjMTYtOThhMTM0NWRmMTQ5In0."
+            },
+            "message": {
+              "type": "string",
+              "example": "Inicio de sesión satisfactorio."
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    },
+    "Error_validacion": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "El campo email no es correcto."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    },
+    "Error_servidor": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Servicio no disponible, intentelo de nuevo más tarde."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

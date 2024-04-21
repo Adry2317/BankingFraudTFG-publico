@@ -1,0 +1,283 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "En esta página encontraras la documentación correspondiente microservicio de sing up.",
+    "version": "1.0.0",
+    "title": "Banking Fraud",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "aaf00022@red.ujaen.es"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5190",
+  "tags": [
+    {
+      "name": "Sing Up",
+      "description": "Todo acerca del registro",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/bankingFraud/singUp": {
+      "post": {
+        "tags": [
+          "Sing Up"
+        ],
+        "summary": "Registra a un nuevo usuario",
+        "description": "Con este microservicio, podemos registrar un nuevo usuario, para autorizar las posteriores llamadas.",
+        "operationId": "singup",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Campos necesarios para el registro del usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/singup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    },
+    "/bankingFraud/singUp/confirm": {
+      "post": {
+        "tags": [
+          "Sing Up"
+        ],
+        "summary": "Registra a un nuevo usuario",
+        "description": "Con este microservicio, podemos confirmar el registro de un usuaruio, tras recibir el otp del cognito.",
+        "operationId": "singup/confirm",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Campos necesarios la confirmación de la cuenta del usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sing_up_confirmation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    },
+    "/bankingFraud/singUp/resend_code": {
+      "post": {
+        "tags": [
+          "Sing Up"
+        ],
+        "summary": "Registra a un nuevo usuario",
+        "description": "Con este microservicio, podemos obtener un nuevo código otp para poder confirmar el usuario.",
+        "operationId": "singup/resend_code",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Campos necesarios para el reenvio del otp.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sing_up_resend"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud procesada correctamente",
+            "schema": {
+              "$ref": "#/definitions/Satisfactorio"
+            }
+          },
+          "422": {
+            "description": "Error de validación",
+            "schema": {
+              "$ref": "#/definitions/Error_validacion"
+            }
+          },
+          "500": {
+            "description": "Erro de servidor",
+            "schema": {
+              "$ref": "#/definitions/Error_servidor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "singup": {
+      "type": "object",
+      "required": [
+        "name",
+        "surname",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "example": "prueba@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "format": "base64"
+        }
+      },
+      "xml": {
+        "name": "sing Up"
+      }
+    },
+    "sing_up_confirmation": {
+      "type": "object",
+      "required": [
+        "email",
+        "code"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "prueba@gmail.com"
+        },
+        "code": {
+          "type": "string",
+          "example": "123456"
+        }
+      },
+      "xml": {
+        "name": "confirm sing Up"
+      }
+    },
+    "sing_up_resend": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "prueba@gmail.com"
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    },
+    "Satisfactorio": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    },
+    "Error_validacion": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "El campo email no es correcto."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    },
+    "Error_servidor": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "Servicio no disponible, intentelo de nuevo más tarde."
+        }
+      },
+      "xml": {
+        "name": "resend otp"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
