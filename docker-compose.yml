@@ -1,29 +1,29 @@
 version: '1'
 services:
-  sing-up-service:
+  sign-up-service:
     build:
       context: .
-      dockerfile: ./singUpService/Dockerfile
+      dockerfile: ./signUpService/Dockerfile
     ports:
       - 5190:5190
     networks:
       - banking_net
       - elastic
 
-  sing-in-service:
+  sign-in-service:
     build:
       context: .
-      dockerfile: ./singInService/Dockerfile
+      dockerfile: ./signInService/Dockerfile
     ports:
       - 5191:5191
     networks:
       - banking_net
       - elastic
 
-  sing-out-service:
+  sign-out-service:
     build:
       context: .
-      dockerfile: ./singOutService/Dockerfile
+      dockerfile: ./signOutService/Dockerfile
     ports:
       - 5192:5192
     networks:
